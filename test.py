@@ -93,6 +93,11 @@ def drawWall(data):
         for y in range(4*data.height//7,data.height,height):
             makeScreen.blit(Gazon,(x,y))  
     
+def updateScore():
+    myfont = pygame.font.SysFont("monospace", 60,bold=True)
+    label = myfont.render("Score:"+str(data.score), 1, (255,255,0))
+    makeScreen.blit(label, (250, data.height//2)) 
+    
 #class drawing the ball
 class Ball(object):
     def __init__(self,x,y):
