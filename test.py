@@ -131,6 +131,18 @@ while True:
         startScreen()
         for event in pygame.event.get():
             key = pygame.key.get_pressed()
+            if event.type == KEYDOWN:
+                if event.key == K_s:
+                    data.mode="level1"
+               
             if event.type==QUIT:
                 pygame.quit()
                 sys.exit()
+                
+    #first level
+    elif(data.mode=="level1"):
+        makeScreen.fill(data.Space) #fill with the space color
+        for i in "PROJECT":
+            i=str2Class(i) #convert to class instance
+            i.moveCloud()
+            i.drawClouds(makeScreen)
