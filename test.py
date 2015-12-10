@@ -332,3 +332,76 @@ while True:
             i=str2Class(i) #convert to class instance
             i.moveCloud()
             i.drawClouds(makeScreen)
+            
+        #display the wall on the side of the pitch
+        drawWall(data)   
+        #draw the pitch      
+        updateScore()
+        updateTimer()        
+        drawPitch()    
+        #draw ball            
+        basket.drawBasket()        
+        basket.finalBasket()
+        ball.drawBall()        
+        basket.halfFinalBasket()        
+        for event in pygame.event.get():
+            key = pygame.key.get_pressed()
+            if event.type == USEREVENT+1:
+                data.timer -= 1
+                if(data.timer==0):
+                    data.mode="score"
+                
+            if event.type == KEYDOWN:                
+                if event.key == K_s:
+                    ball=Ball((random.randint(300,600)),
+                              (random.randint(300,500)))
+                    init(data)
+               
+            if event.type==QUIT:
+                pygame.quit()
+                sys.exit()
+            if  event.type ==pygame.MOUSEBUTTONUP:
+                #print(pygame.mouse.get_pos())
+                data.destX=pygame.mouse.get_pos()[0]
+                data.destY=pygame.mouse.get_pos()[1]
+                data.move=True
+                data.bounceLimit=data.height-((data.height-data.destY)//3)
+
+        if(data.move):
+            if(data.movingDirection=="straight" and 
+                                    ((ball.x-data.r <= data.destX and
+                                            ball.x+data.r> data.destX) or 
+                                            (ball.y-data.r <= data.destY and 
+                                             ball.y+data.r> data.destY))):
+                data.movingDirection="straight"
+                ball.moveBall()
+            elif(data.destY<ball.y):                
+                if(not data.bending):
+                    if(data.destX<ball.x):
+                        data.movingRight=False
+                    else:
+                        data.movingRight=True                       
+                    data.movingDirection="up"
+                ball.moveBall()
+            else:
+                data.movingDirection="down"
+                ball.moveBall()            
+        if(data.bounce):
+            ball.bounceBall()
+    elif(data.mode=="score"):
+        makeScreen.fill(data.Space) #fill with the space color
+        for i in "PROJECT":
+            i=str2Class(i) #convert to class instance
+            i.moveCloud()
+            i.drawClouds(makeScreen)            
+        #display the wall 
+        drawWall(data)        
+        for event in pygame.event.get():
+            key = pygame.key.get_pressed()
+            if event.type == KEYDOWN:
+                if event.key == K_s:
+                    data.mode="level1"               
+            if event.type==QUIT:
+                pygame.quit()
+                sys.exit()  
+        drawScore()
