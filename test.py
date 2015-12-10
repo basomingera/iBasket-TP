@@ -93,6 +93,127 @@ def drawWall(data):
         for y in range(4*data.height//7,data.height,height):
             makeScreen.blit(Gazon,(x,y))  
     
+#class drawing the ball
+class Ball(object):
+    def __init__(self,x,y):
+        self.x=x
+        self.y=y
+        self.r=data.r
+        self.bend=1
+        self.move=10
+           
+    def drawBall(self):            
+        #Fake shadow
+        if self.y<(data.height//2):
+            self.yb=5*data.height//7
+        else:
+            self.yb=self.y+((data.height-self.y)//2)                    
+        pygame.draw.circle(makeScreen, data.Black, 
+                           (self.x+10,self.yb), self.r, 0)     
+        #the ball
+        pygame.draw.circle(makeScreen, data.Red, (self.x,self.y), self.r, 0)
+        
+    def hitBasket(self):
+        pass
+    
+    def scored(self):
+        pass
+        
+    def moveBall(self):
+        #formula math.cos(self.angle) * self.speed
+        #adapted from http://goo.gl/u7lOKs
+                
+        if(272<self.y<275 and 163<self.x<255):# and 
+           #data.movingDirection=="down"):
+            data.score+=50
+        elif(272<self.y<275 and 163<self.x<255 and 
+             data.movingDirection=="up"):
+            data.movingDirection="down"
+            data.bending=True
+        
+        if((70<self.x<150 and 200<self.y<300) or 
+           (90<self.x<110 and 300<self.y<550)):
+            data.movingRight=True
+            data.movingDirection="down"
+            data.bounce=True
+            data.bending=True
+
+        if(data.movingDirection=="straight"):
+            if(self.x-data.r <= data.destX and self.x+data.r> data.destX):
+                if(self.y>=9*data.height//10):
+                    data.move=False
+                    data.bounce=True
+                if(not data.bending):
+                    self.x =self.x
+                    self.y -= int(math.cos(self.bend) * self.move)
+                    if(self.y<=data.destY):
+                        data.bending=True
+                else:
+                    self.x =self.x
+                    self.y += int(math.cos(self.bend) * self.move)
+            elif(ball.y-data.r <= data.destY and ball.y+data.r> data.destY):
+                if(self.x-data.r <= data.destX):
+                    self.y =self.y
+                    self.x += int(math.cos(self.bend) * self.move)
+                else:
+                    self.y =self.y
+                    self.x -= int(math.cos(self.bend) * self.move)
+                    
+        elif(data.movingDirection=="up"):           
+            self.destX=data.destX
+            self.destY=data.destY
+            if(self.y>=9*data.height//10):
+                data.move=False
+                data.bounce=True
+                         
+            if(self.destX>self.x+self.r):
+                if self.destY>self.x:
+                    self.x += int(math.sin(self.bend) * self.move)
+                    self.y += int(math.cos(self.bend) * self.move)
+                else:
+                    self.x += int(math.sin(self.bend) * self.move)
+                    self.y -= int(math.cos(self.bend) * self.move)
+                    
+            elif(self.destX<self.x-self.r):
+                if self.destY>self.x:
+                    self.x -= int(math.sin(self.bend) * self.move)
+                    self.y += int(math.cos(self.bend) * self.move)
+                else:
+                    self.x -= int(math.sin(self.bend) * self.move)
+                    self.y -= int(math.cos(self.bend) * self.move)
+            else:
+                data.movingDirection="down"
+                data.bending=True
+                self.x -= int(math.sin(self.bend) * self.move)#self.destX
+                self.y += int(math.cos(self.bend) * self.move)
+    
+        elif(data.movingDirection=="down"):
+            if(not data.movingRight):
+                self.x -= int(math.sin(self.bend) * self.move)#self.destX
+                self.y += int(math.cos(self.bend) * self.move)
+                if(self.y>=9*data.height//10):
+                    data.bounce=True
+            else:
+                self.x += int(math.sin(self.bend) * self.move)#self.destX
+                self.y += int(math.cos(self.bend) * self.move)
+                if(self.y>=9*data.height//10):
+                    data.bounce=True
+            
+    def bounceBall(self):
+        if(data.bounceDirection=="up"):
+            if(data.height-data.bounceLimit>data.height-self.y):
+                self.y-=data.dy
+            elif(data.height-data.bounceLimit<=data.height-self.y):
+                data.bounceLimit+=(((9*data.height//10)-data.bounceLimit)//2)
+                data.bounceDirection="down"
+        else:
+            if(self.y<9*data.height//10):
+                self.y+=data.dy
+            else:
+                data.bounceDirection="up"
+                if(self.y-data.bounceLimit<3):
+                    data.bounce=False
+
 class Clouds(object):  # represents the cloud and move it
     def __init__(self,x,y):
         self.x1=x
