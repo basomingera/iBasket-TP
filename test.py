@@ -87,6 +87,22 @@ class Clouds(object):  # represents the cloud and move it
 def startScreen():
     myfont = pygame.font.SysFont("monospace", 45,bold=True)
     label = myfont.render("Welcome to iBasket game", 1, (255,255,0))
-    label1 = myfont.render("Just relax and press r to start", 1, (255,255,0))
+    label1 = myfont.render("Just relax and press S to start", 1, (255,255,0))
     makeScreen.blit(label, (150, 150))
     makeScreen.blit(label1, (50, 200))
+    
+clock = pygame.time.Clock()
+pygame.time.set_timer(USEREVENT+1, 1000)
+while True:
+##run till the app exit
+    pygame.display.update() # update the screen
+    clock.tick(50)
+    #start screen
+    if(data.mode=="start"):
+        
+        startScreen()
+        for event in pygame.event.get():
+            key = pygame.key.get_pressed()
+            if event.type==QUIT:
+                pygame.quit()
+                sys.exit()
