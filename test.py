@@ -22,3 +22,4 @@ def init(data):
     data.level=1
 init(data)
 makeScreen=pygame.display.set_mode( (data.width, data.height))
+pygame.display.set_caption('iBasket Term Project')
