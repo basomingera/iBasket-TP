@@ -102,6 +102,15 @@ def startScreen():
     makeScreen.blit(label, (150, 150))
     makeScreen.blit(label1, (50, 200))
     
+# create clouds' instances
+P = Clouds(data.width,(random.randint(0,150)))
+R = Clouds(750,(random.randint(10,150)))
+O = Clouds(500,(random.randint(10,150)))
+J = Clouds(600,(random.randint(10,150)))
+E = Clouds(450,(random.randint(10,150)))
+C = Clouds(300,(random.randint(10,150)))
+T = Clouds(150,(random.randint(10,150)))
+ 
 clock = pygame.time.Clock()
 pygame.time.set_timer(USEREVENT+1, 1000)
 while True:
