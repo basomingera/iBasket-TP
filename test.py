@@ -237,6 +237,26 @@ class Clouds(object):  # represents the cloud and move it
             self.x1-=1
         else: self.x1=data.width
         
+class Basket(object):
+    def __init__(self):
+        #to do
+        #try to use sprite to detect collision
+        pygame.sprite.Sprite.__init__(self)
+    def drawBasket(self):
+        pygame.draw.line(makeScreen, data.Black, (100,550), 
+                         (100,300), 30)
+        pygame.draw.polygon(makeScreen, data.Blue, ((70,330),
+                        (150,300),(150,200),(70,230)), 0)
+        pygame.draw.line(makeScreen, data.Black, (100,280), 
+                         (150,280), 18)
+        
+    def finalBasket(self):
+        basket = pygame.image.load('image/basket.png')
+        makeScreen.blit(basket,(150,250))
+        
+    def halfFinalBasket(self):
+        basket = pygame.image.load('image/basket2.png')
+        makeScreen.blit(basket,(150,250))
         
 def startScreen():
     myfont = pygame.font.SysFont("monospace", 45,bold=True)
