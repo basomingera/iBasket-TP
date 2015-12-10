@@ -32,6 +32,25 @@ def init(data):
 init(data)
 makeScreen=pygame.display.set_mode( (data.width, data.height))
 pygame.display.set_caption('iBasket Term Project')
+    
+def drawWall(data):
+    #image from http://goo.gl/nqvwrF
+    backG = pygame.image.load('image/tile.png') 
+    wall = backG.get_rect()
+    width=wall.width
+    height=wall.height
+    for x in range(0,data.width,width):
+        for y in range(2*data.height//5,4*data.height//7,height):
+            makeScreen.blit(backG,(x,y))
+    #image from http://goo.gl/3sZ2NW   
+    Gazon = pygame.image.load('image/gazon.jpg') 
+    gazonSize = Gazon.get_rect()
+    width=gazonSize.width
+    height=gazonSize.height
+    for x in range(0,data.width,width):
+        for y in range(4*data.height//7,data.height,height):
+            makeScreen.blit(Gazon,(x,y))  
+    
 class Clouds(object):  # represents the cloud and move it
     def __init__(self,x,y):
         self.x1=x
