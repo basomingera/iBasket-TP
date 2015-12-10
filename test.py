@@ -21,3 +21,4 @@ def init(data):
     data.width=900
     data.level=1
 init(data)
+makeScreen=pygame.display.set_mode( (data.width, data.height))
