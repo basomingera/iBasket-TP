@@ -43,6 +43,15 @@ def init(data):
     data.Black=(0,0,0)
     data.Grey=(84,84,84)
     
+    #basket sizes
+    data.basketW=50 #width
+    data.heightH=40 #height
+    
+    #pitch measure
+    data.pitchHeight=450
+    data.pitchMargin=200
+
+
 init(data)
 makeScreen=pygame.display.set_mode( (data.width, data.height))
 pygame.display.set_caption('iBasket Term Project')
