@@ -275,6 +275,15 @@ def startScreen():
     makeScreen.blit(label, (150, 150))
     makeScreen.blit(label1, (50, 200))
     
+def drawScore():
+    myfont = pygame.font.SysFont("monospace", 45,bold=True)
+    label = myfont.render("This is iBasket game", 1, (0,0,0))
+    label1 = myfont.render("You scored:"+str(data.score), 1, (0,0,0))
+    label2 = myfont.render("Just relax and press r to restart", 1, (0,0,0))
+    makeScreen.blit(label, (150, 150))
+    makeScreen.blit(label1, (150, 200))
+    makeScreen.blit(label2, (30, 250))
+    
 # create clouds' instances
 P = Clouds(data.width,(random.randint(0,150)))
 R = Clouds(750,(random.randint(10,150)))
