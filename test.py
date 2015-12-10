@@ -113,6 +113,14 @@ T = Clouds(150,(random.randint(10,150)))
  
 clock = pygame.time.Clock()
 pygame.time.set_timer(USEREVENT+1, 1000)
+
+#convert string to class instances
+def str2Class(s):
+    if s in globals() and isinstance(Clouds, type):
+            return globals()[s]
+    return None
+
+
 while True:
 ##run till the app exit
     pygame.display.update() # update the screen
