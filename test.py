@@ -34,13 +34,24 @@ init(data)
 makeScreen=pygame.display.set_mode( (data.width, data.height))
 pygame.display.set_caption('iBasket Term Project')
 
-def drawPitch():    
-    pygame.draw.polygon(makeScreen, data.Grey, ((0,data.height),(200,450),(data.width,450),(data.width,data.height)), 0)
-    pygame.draw.line(makeScreen, data.Black, (0,data.height), (200,450), 10)
-    pygame.draw.line(makeScreen, data.Black, (200,450), (data.width,450), 10)
-    pygame.draw.line(makeScreen, data.Black, (500,data.height), (600,450), 10)
-    pygame.draw.line(makeScreen, data.Black, (0,data.height), (data.width,data.height), 10)
-    pygame.draw.line(makeScreen, data.Black, (0,data.height), (200,450), 60)
+def drawPitch():
+    #draw the pitch with a grey color filled in
+    pygame.draw.polygon(makeScreen, data.Grey, 
+                    ((0,data.height),(data.pitchMargin,data.pitchHeight),
+                    (data.width,data.pitchHeight),(data.width,data.height)),0)
+    pygame.draw.line(makeScreen, data.Black, (0,data.height), 
+                     (data.pitchMargin,data.pitchHeight), 10)
+    pygame.draw.line(makeScreen, data.Black, 
+                     (data.pitchMargin,data.pitchHeight), 
+                     (data.width,data.pitchHeight), 10)
+    pygame.draw.line(makeScreen, data.Black, 
+                     (data.pitchHeight+data.pitchMargin//2,data.height), 
+                     ((data.pitchMargin+data.pitchHeight),data.pitchHeight), 
+                     10)
+    pygame.draw.line(makeScreen, data.Black, (0,data.height), 
+                     (data.width,data.height), 10)
+    pygame.draw.line(makeScreen, data.Black, (0,data.height), 
+                     (data.pitchMargin,data.pitchHeight), 60)
     
 def drawWall(data):
     #image from http://goo.gl/nqvwrF
