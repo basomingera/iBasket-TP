@@ -274,6 +274,10 @@ E = Clouds(450,(random.randint(10,150)))
 C = Clouds(300,(random.randint(10,150)))
 T = Clouds(150,(random.randint(10,150)))
  
+#create ball instances
+ball=Ball((random.randint(300,600)),(random.randint(300,500)))
+basket=Basket()
+
 clock = pygame.time.Clock()
 pygame.time.set_timer(USEREVENT+1, 1000)
 
