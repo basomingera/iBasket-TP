@@ -20,6 +20,7 @@ def init(data):
     data.height=700
     data.width=900
     data.level=1
+    data.mode="start" #or level or level 1
     #colors
     data.Red=(255,0,0)
     data.Blue=(0,0,255)
