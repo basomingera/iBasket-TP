@@ -82,3 +82,10 @@ class Clouds(object):  # represents the cloud and move it
             self.x1-=1
         else: self.x1=data.width
         
+        
+def startScreen():
+    myfont = pygame.font.SysFont("monospace", 45,bold=True)
+    label = myfont.render("Welcome to iBasket game", 1, (255,255,0))
+    label1 = myfont.render("Just relax and press r to start", 1, (255,255,0))
+    makeScreen.blit(label, (150, 150))
+    makeScreen.blit(label1, (50, 200))
