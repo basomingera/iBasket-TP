@@ -20,6 +20,19 @@ def init(data):
     data.height=700
     data.width=900
     data.level=1
+    data.destX=0
+    data.destY=0
+    data.r=20   #radius
+    data.move=False
+    data.bounce=False
+    data.bounceDirection="up"
+    data.bounceLimit=data.height//2
+    data.movingDirection="straight" #or up or down
+    data.movingRight=False
+    data.bending=False
+    data.dy=3   #delta y while bouncing
+    data.score=0
+    data.timer=20
     data.mode="start" #or level or level 1
     #colors
     data.Red=(255,0,0)
