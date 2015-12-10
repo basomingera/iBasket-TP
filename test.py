@@ -98,6 +98,11 @@ def updateScore():
     label = myfont.render("Score:"+str(data.score), 1, (255,255,0))
     makeScreen.blit(label, (250, data.height//2)) 
     
+def updateTimer():
+    myfont = pygame.font.SysFont("monospace", 60,bold=True)
+    label = myfont.render("Time:"+str(data.timer), 1, (255,255,0))
+    makeScreen.blit(label, (2*data.width//3, data.height//2)) 
+
 #class drawing the ball
 class Ball(object):
     def __init__(self,x,y):
