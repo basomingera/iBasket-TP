@@ -10,27 +10,14 @@ from pygame.locals import *
 import random
 import math
 
-#all pygame modules declared are initialized
-pygame.init()
-
-#adapted song by Lil Jon-Snap your finger
-ballSound = 'sounds/snapFinger.mp3'
-pygame.mixer.init()
-pygame.mixer.music.load(ballSound)
-pygame.mixer.music.play()
-
-class Struct(object): pass
-data = Struct()
 
 def init(data):
     data.balls=[]
     data.height=700
     data.width=900
-    data.level=1
-    
+    data.level=1   
     data.shootedBalls=0
-    data.accuracy=0
-    
+    data.accuracy=0   
     data.dy=2   #delta y while bouncing
     data.score=0
     data.timer=20
@@ -45,20 +32,28 @@ def init(data):
     data.Grey=(84,84,84)
     data.Yellow=(255,255,0)
     data.white=(255,255,255)
-    
     #basket
     data.basketW=50 #width
     data.heightH=40 #height
     data.basketX0=176#169
     data.basketY0=265 #273
     data.basketX1=250#250
-    data.basketY1=280
-    
+    data.basketY1=280   
     #pitch measure
     data.pitchHeight=450
     data.pitchMargin=200
 
+#all pygame modules declared are initialized
+pygame.init()
 
+#adapted song by Lil Jon-Snap your finger
+ballSound = 'sounds/snapFinger.mp3'
+pygame.mixer.init()
+pygame.mixer.music.load(ballSound)
+pygame.mixer.music.play()
+
+class Struct(object): pass
+data = Struct()
 init(data)
 makeScreen=pygame.display.set_mode( (data.width, data.height))
 pygame.display.set_caption('iBasket Term Project')
@@ -396,8 +391,9 @@ while True:
             if event.type==QUIT:
                 pygame.quit()
                 sys.exit()
-
+    #######################################################
     ##################### First level #####################
+    #######################################################
     elif(data.mode=="level1"):
         makeScreen.fill(data.Space) #fill with the space color
         for i in "PROJECT":
@@ -426,18 +422,6 @@ while True:
             if event.type==QUIT:
                 pygame.quit()
                 sys.exit()
-                
-            if event.type == KEYDOWN:                
-                if event.key == K_s:
-                    ball=Ball((random.randint(400,700)),
-                              (random.randint(300,320)))
-                    #init(data)
-                    ball.move=False
-                    ball.bounce=False
-                    ball.bounceDirection="up"
-                    ball.movingDirection="straight" #or up or down
-                    ball.movingRight=False
-                    ball.bending=False
 
             if  event.type ==pygame.MOUSEBUTTONUP:
                 #print(pygame.mouse.get_pos())
@@ -473,8 +457,9 @@ while True:
             if(ball.bounce):
                 ball.bounceBall()
                 
-    
-    ##################### Second level #####################
+    #######################################################
+    ##################### Second level ####################
+    #######################################################
     elif(data.mode=="level2"):
         makeScreen.fill(data.Space) #fill with the space color
         for i in "PROJECT":
@@ -568,7 +553,7 @@ while True:
                     data.mode="level2" if(tempScore>500 and tempAccuracy>50) else "level1"
             if event.type==QUIT:
                 pygame.quit()
-                sys.exit()           
+                sys.exit()
         drawScore()
     elif(data.mode=="help"):
         helpScreen()
