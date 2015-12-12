@@ -26,17 +26,6 @@ def init(data):
     data.height=700
     data.width=900
     data.level=1
-    data.destX=0
-    data.destY=0
-    data.r=20   #radius
-    data.move=False
-    data.bounce=False
-    data.bounceDirection="up"
-    data.bounceLimit=data.height//2
-    data.movingDirection="straight" #or up or down
-    data.movingRight=False
-    data.bending=False
-    data.dy=3   #delta y while bouncing
     data.score=0
     data.timer=20
     data.mode="start" #or level or level 1
@@ -114,9 +103,19 @@ class Ball(object):
     def __init__(self,x,y):
         self.x=x
         self.y=y
-        self.r=data.r
         self.bend=1
-        self.move=10
+        self.jump=10
+        
+        self.destX=0
+        self.destY=0
+        self.r=20   #radius
+        self.move=False
+        self.bounce=False
+        self.bounceDirection="up"
+        self.bounceLimit=data.height//2
+        self.movingDirection="straight" #or up or down
+        self.movingRight=False
+        self.bending=False
            
     def drawBall(self):            
         #Fake shadow
