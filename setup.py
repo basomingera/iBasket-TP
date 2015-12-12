@@ -20,8 +20,8 @@ def init(data):
     data.accuracy=0   
     data.dy=2   #delta y while bouncing
     data.score=0
-    data.timer=20
-    data.mode="start" #or level or level 1
+    data.timer=40
+    data.mode="start" #or level2 or level 1 or help mode
     #colors
     data.Red=(255,0,0)
     data.Blue=(0,0,255)
@@ -36,9 +36,9 @@ def init(data):
     data.basketW=50 #width
     data.heightH=40 #height
     data.basketX0=176#169
-    data.basketY0=265 #273
+    data.basketY0=240#265
     data.basketX1=250#250
-    data.basketY1=280   
+    data.basketY1=274#280   
     #pitch measure
     data.pitchHeight=450
     data.pitchMargin=200
@@ -46,7 +46,9 @@ def init(data):
 #all pygame modules declared are initialized
 pygame.init()
 
-#adapted song by Lil Jon-Snap your finger
+###########################################
+#adapted song by Lil Jon-Snap your fingers##
+############################################
 ballSound = 'sounds/snapFinger.mp3'
 pygame.mixer.init()
 pygame.mixer.music.load(ballSound)
@@ -77,12 +79,13 @@ class Ball(object):
         self.movingDirection="straight" #or up or down
         self.movingRight=False
         self.bending=False
+        self.score=50
     
     def destinations(self,x,y):
         pass
            
     def drawBall(self):            
-        #Fake shadow
+        # shadow
         if self.y<(data.height//2):
             self.yb=5*data.height//7
         else:
@@ -94,18 +97,19 @@ class Ball(object):
         
     def hitBasket(self):
         if((data.height//7<self.x<150 and 2*(data.height//7)<self.y<3*(data.height//7)) or (90<self.x<110 and 300<self.y<550)):
-            #print("1st Hit")
             return [True,"down"]
         elif(((self.y>data.basketY0 and self.y<data.basketY1) and (176>self.x and self.x>146)) or 
              ((self.y>data.basketY0 and self.y<data.basketY1) and (262>self.x and self.x>242))):
-            #print("hit")
-            return [True,"down"]
+            self.movingRight=True
+            self.destX=data.width
+            self.bending=True
+            self.destY=0
+            return [True,"up"]
         return False
     
     def ifScored(self):
         
-        if((self.y>data.basketY0+10 and self.y<data.basketY1) and (data.basketX1>self.x and self.x>data.basketX0)):
-            #ball.movingDirection="straight"
+        if((self.y>data.basketY0 and self.y<data.basketY1) and (data.basketX1>self.x and self.x>data.basketX0)):
             return True
         return False
         
@@ -114,7 +118,8 @@ class Ball(object):
         #adapted from http://goo.gl/u7lOKs                
         if(self.ifScored() and self.movingDirection=="down"): 
             #self.movingDirection=="down"):
-            data.score+=50
+            data.score+=self.score
+            self.score=0
             
         elif(self.ifScored() and self.movingDirection=="up"):
             self.movingDirection="down"
@@ -123,7 +128,6 @@ class Ball(object):
         #if ball hit the basket
         if(self.hitBasket()):
             self.movingRight=True
-            #print("dire",self.hitBasket()[1])
             self.movingDirection=self.hitBasket()[1]
             self.bounce=False
             self.bending=True
@@ -174,17 +178,17 @@ class Ball(object):
             else:
                 self.movingDirection="down"
                 self.bending=True
-                self.x -= int(math.sin(self.bend) * self.jump)#self.destX
+                self.x -= int(math.sin(self.bend) * self.jump)
                 self.y += int(math.cos(self.bend) * self.jump)
     
         elif(self.movingDirection=="down"):
             if(not self.movingRight):
-                self.x -= int(math.sin(self.bend) * self.jump)#self.destX
+                self.x -= int(math.sin(self.bend) * self.jump)
                 self.y += int(math.cos(self.bend) * self.jump)
                 if(self.y>=9*data.height//10):
                     self.bounce=True
             else:
-                self.x += int(math.sin(self.bend) * self.jump)#self.destX
+                self.x += int(math.sin(self.bend) * self.jump)
                 self.y += int(math.cos(self.bend) * self.jump)
                 if(self.y>=9*data.height//10):
                     self.bounce=True
@@ -205,7 +209,7 @@ class Ball(object):
                     self.bounce=False
                     #self.kill()   
 
-class Clouds(object):  # represents the cloud and move it
+class Clouds(object):  # represents the cloud and move them
     def __init__(self,x,y):
         self.x1=x
         self.x0=40
@@ -230,8 +234,6 @@ class Clouds(object):  # represents the cloud and move it
         
 class Basket(object):
     def __init__(self):
-        #to do
-        #try to use sprite to detect collision
         pygame.sprite.Sprite.__init__(self)
     def drawBasket(self):
         pygame.draw.line(makeScreen, data.Black, (100,550), 
@@ -270,7 +272,9 @@ def drawPitch():
                      (data.pitchMargin,data.pitchHeight), 60)
     
 def drawWall(data):
+    ################################
     #image from http://goo.gl/nqvwrF
+    ################################
     backG = pygame.image.load('image/tile.png') 
     wall = backG.get_rect()
     width=wall.width
@@ -278,7 +282,9 @@ def drawWall(data):
     for x in range(0,data.width,width):
         for y in range(2*data.height//5,4*data.height//7,height):
             makeScreen.blit(backG,(x,y))
+    ###################################
     #image from http://goo.gl/3sZ2NW   
+    ##################################
     Gazon = pygame.image.load('image/gazon.jpg') 
     gazonSize = Gazon.get_rect()
     width=gazonSize.width
@@ -312,16 +318,45 @@ def startScreen():
     
 def helpScreen():
     makeScreen.fill(data.white)
-    myfont = pygame.font.SysFont("Times New Roman", 35,bold=True)
+    myfont = pygame.font.SysFont("Times New Roman", 25,bold=True)
     label = myfont.render("Welcome to iBasket game.    Press S to start playing!", 1, data.Black)
-    label1=myfont.render(
-'''Welcome         to iBasket game.\n    
-Press S to start \t aying!''',
-                         1, (255,255,0))
-    makeScreen.blit(label, (50, 150))
-    makeScreen.blit(label1,(50,200))
+    label1=myfont.render('''+++++++++++++++++++''', 1, data.Black)
+    label2=myfont.render("To play iBasket you don't need to be a usual basketball player", 1, data.Black)
+    label3=myfont.render("======== For Level 1 ===========", 1, data.Blue)
+    label4=myfont.render("After pressing S to start playing, the level 1 screen will come", 1, data.Black)
+    label5=myfont.render("Use the mouse to move the ball. The ball moves following the clicked point", 1, data.Black)
+    label6=myfont.render("but in a projectile move form", 1, data.Black)
+    label7=myfont.render("As long as you click, another ball will show up!", 1, data.Black)
+    label8=myfont.render("To reach Level2, you have to score at least 500 with accuracy of 50% at least", 1, data.Black)
+    label9=myfont.render("============== For level 2 ===============", 1, data.Blue)
+    label10=myfont.render("you only reach level 2 after you gone through level 1", 1, data.Black)
+    label11=myfont.render("After pressing r to restart playing, the level 2 screen will show up", 1, data.Black)
+    label12=myfont.render("Use the mouse to move the ball. The ball moves following the clicked point", 1, data.Black)
+    label13=myfont.render("but in a projectile move form", 1, data.Black)
+    label14=myfont.render("As long as you click, the ball moves but no other ball shows up!", 1, data.Black)
+    label15=myfont.render("Press S to get another ball or to place the current ball to another direction", 1, data.Black)
+    label16=myfont.render("However; if you replace the ball decrease your accuracy!", 1, data.Black)
+    label17=myfont.render("Ready? press S to start and have fun!!!", 1, data.Black)
+            
+    makeScreen.blit(label, (50, 0))
+    makeScreen.blit(label1, (50, 40))
+    makeScreen.blit(label2,(50,80))
+    makeScreen.blit(label3,(50,120))
+    makeScreen.blit(label4,(50,160))
+    makeScreen.blit(label5,(50,200))
+    makeScreen.blit(label6,(50,240))
+    makeScreen.blit(label7,(50,280))
+    makeScreen.blit(label8,(50,320))
+    makeScreen.blit(label9,(50,360))
+    makeScreen.blit(label10,(50,400))
+    makeScreen.blit(label11,(50,440))
+    makeScreen.blit(label12,(50,480))
+    makeScreen.blit(label13,(50,520))
+    makeScreen.blit(label14,(50,560))
+    makeScreen.blit(label15,(50,600))
+    makeScreen.blit(label16,(50,640))
+    makeScreen.blit(label17,(50,675))
 
-    
 def drawScore():
     myfont = pygame.font.SysFont("Times New Roman", 80,bold=True)
     label = myfont.render("This is iBasket game", 1, data.Blue)
@@ -344,19 +379,8 @@ J = Clouds(600,(random.randint(10,150)))
 E = Clouds(450,(random.randint(10,150)))
 C = Clouds(300,(random.randint(10,150)))
 T = Clouds(150,(random.randint(10,150)))
- 
-#create ball instances
-#ball=Ball((random.randint(300,600)),(random.randint(300,500)))
 
 basket=Basket()
-
-#to do
-#sprite to deal with collision
-#sBasket=pygame.sprite.Group
-#sBall=pygame.sprite.Group
-#sBasket.add(basket)
-#sBall.add(ball)
-
 clock = pygame.time.Clock()
 pygame.time.set_timer(USEREVENT+1, 1000)
 
@@ -560,8 +584,9 @@ while True:
         for event in pygame.event.get():
             key = pygame.key.get_pressed()
             if event.type == KEYDOWN:
-                if event.key == K_r:
+                if event.key == K_s:
                     init(data)
+                    data.balls.append(Ball((random.randint(400,700)),(random.randint(300,320))))
                     data.mode="level1"
             if event.type==QUIT:
                 pygame.quit()
