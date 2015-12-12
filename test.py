@@ -13,6 +13,12 @@ import math
 #all pygame modules declared are initialized
 pygame.init()
 
+#adapted song by Lil Jon-Snap your finger
+ballSound = 'sounds/snapFinger.mp3'
+pygame.mixer.init()
+pygame.mixer.music.load(ballSound)
+pygame.mixer.music.play()
+
 class Struct(object): pass
 data = Struct()
 
