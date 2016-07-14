@@ -4,10 +4,15 @@
 	**It is a Basketball like game but it is a single player game adapted from the usual iOS game called iBasket.**
 Requirement to run the game:
 ---
-To be able to run the Game, it is needed to have a computer where Python3 and Pygame are installed. To install Pygame on a Linux-Ubuntu based OS:
+To be able to run the Game, it is needed to have a computer with Python3 and Pygame installed.
+To install Pygame on a Linux-Ubuntu based OS:
  1. open terminel
- 2.  run command #sudo apt-get install python3-pygame
- 3. provide the root's password
+ 2.  run commands:
+	sudo apt-get install mercurial python3-pip libfreetype6-dev
+	sudo apt-get build-dep python-pygame
+	sudo pip3 install hg+http://bitbucket.org/pygame/pygame
+
+
 How to run the game:
 ---
 To run the application in a Linux based environemt: 
