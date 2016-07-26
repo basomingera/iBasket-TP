@@ -11,7 +11,9 @@ To install Pygame on a Linux-Ubuntu based OS:
  2.  run commands:
  
 	sudo apt-get install mercurial python3-pip libfreetype6-dev
+
 	sudo apt-get build-dep python-pygame
+	
 	sudo pip3 install hg+http://bitbucket.org/pygame/pygame
 
 
