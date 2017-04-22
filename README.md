@@ -1,8 +1,5 @@
-	                 **iBasket-TP**
-	 
- This project was done in Python for completion of the term project at Carnegie Mellon university in the course 15-112:Fundamentals of Programming and Computer Science.
+ This is a single player Basketball-like game adapted from the usual iOS game called iBasket.
  
-	It is a Basketball like game but it is a single player game adapted from the usual iOS game called iBasket.
 Requirements to run the game:
 ---
 To be able to run the Game, it is needed to have a computer with Python3 and Pygame installed.
