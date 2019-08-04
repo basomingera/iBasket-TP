@@ -94,6 +94,7 @@ class Ball(object):
                            (self.x+10,self.yb), self.r, 0)     
         #the ball
         pygame.draw.circle(makeScreen, data.Red, (self.x,self.y), self.r, 0)
+        pygame.draw.lines(makeScreen, data.white, False, [(self.x-self.r, self.y), (self.x, self.y-(self.r/2)), (self.x+self.r, self.y)], 2)
         
     def hitBasket(self):
         if((data.height//7<self.x<150 and 2*(data.height//7)<self.y<3*(data.height//7)) or (90<self.x<110 and 300<self.y<550)):
